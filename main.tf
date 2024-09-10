@@ -12,7 +12,7 @@ resource "kubernetes_secret" "default" {
   metadata {
     name = "env-secrets"
   }
-  data = data.external.env
+  data = data.external.env.result
 }
 
 # Run the script to get the environment variables of interest.
