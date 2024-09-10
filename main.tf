@@ -12,11 +12,11 @@ resource "kubernetes_secret" "default" {
   metadata {
     name = "env-secrets"
   }
-  data = data.external.json.result
+  data = data.external.env
 }
 
-# Use a ruby script to extract a json hash of environment variables
-# From TF 0.12 this can be replaced with TF functionality
-data "external" "json" {
-  program = ["ruby", "map_from_env.rb"]
+# Run the script to get the environment variables of interest.
+# This is a data source, so it will run at plan time.
+data "external" "env" {
+  program = ["${path.module}/env.sh"]
 }
